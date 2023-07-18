@@ -1,0 +1,48 @@
+﻿.img {
+    width: 400px;
+    height: 200px;
+}
+
+    .img:hover {
+        height: 250px;
+        width: 500px;
+    }
+
+body {
+    background: url('https://images.unsplash.com/photo-1597200381847-30ec200eeb9a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=8');
+    background-size: cover;
+    font-family: Kumbh sans;
+}
+
+.title {
+    color:#fff;
+    font-family: Kumbh sans;
+    text-shadow: 5px -5px 5px black;
+    text-align: center;
+}
+.Subtitle {
+    color: rgb(7, 82, 15);
+    font-family: Kumbh sans;
+    text-align: center;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.container-item {
+    background: rgb(36,130, 39);
+    color: white;
+    font-size: 25px;
+    text-align: center;
+    width: 150px;
+    line-height: 50px;
+    margin: 10px;
+}
+.container-item:hover {
+    color: black;
+    
+}
+.paragraph-text {
+    text-align: left;
+}
