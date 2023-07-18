@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class A1p2 {
+    public static void main(String[] args) {
+    	 // Verify command line
+        if (args.length < 1) {
+            System.out.println("Please provide a positive integer as a command line argument.");
+            return;
+        }
+
+        // Convert string to integer
+        int n = Integer.parseInt(args[0]);
+
+        // create and store integers
+        int[] numbers = new int[n];
+
+        // Read the integers
+        Scanner scanner = new Scanner(System.in);
+        for (int i = 0; i < n; i++) {
+            numbers[i] = scanner.nextInt();
+        }
+        scanner.close();
+
+        // print methods
+        int largestOdd = findLargestOdd(numbers);
+        int smallestEven = findSmallestEven(numbers);
+
+        // Print
+        System.out.println("The largest odd input integer is " + largestOdd + ".");
+        System.out.println("The smallest even input integer is " + smallestEven + ".");
+    }
+
+    // Largest odd integer method
+    public static int findLargestOdd(int[] arr) {
+        int largestOdd = Integer.MIN_VALUE;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] % 2 != 0 && arr[i] > largestOdd) {
+                largestOdd = arr[i];
+            }
+        }
+        return largestOdd;
+    }
+
+    // Smallest even integer method
+    public static int findSmallestEven(int[] arr) {
+        int smallestEven = Integer.MAX_VALUE;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] % 2 == 0 && arr[i] < smallestEven) {
+                smallestEven = arr[i];
+            }
+        }
+        return smallestEven;
+    }
+}
