@@ -1,0 +1,89 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class A3p1 {
+    public static void main(String[] args) {
+    	//Verify the command line
+        if (args.length < 1) {
+            System.out.println("Please provide the number of students as a command line argument.");
+            return;
+        }
+     //convert integer to string
+        int num = Integer.parseInt(args[0]);
+
+        // store array
+        List<Student> students = new ArrayList<>();
+
+        //create a Scanner 
+        Scanner input = new Scanner(System.in);
+
+        //enter user data
+        for (int i = 0; i < num; i++) {
+            System.out.println("Enter information for student " + (i + 1) + ":");
+            System.out.print("Name: ");
+            String name = input.nextLine();
+            System.out.print("Sex('F' or 'M'): ");
+            char sex = input.nextLine().charAt(0);
+            System.out.print("Age: ");
+            int age = Integer.parseInt(input.nextLine());
+            System.out.println();
+
+            //calling object
+            students.add(new Student(name, sex, age));
+    }
+        //print user data
+        System.out.println("The students you entered are:");
+        for (Student student : students) {
+            System.out.println(student.name + " is a " + (student.sex == 'F' ? "female" : "male") +
+                    " student of age " + student.age + ".");
+        }
+
+        //find the oldest female and youngest male 
+        int minMaleAge = Integer.MAX_VALUE;
+        int maxFemaleAge = Integer.MIN_VALUE;
+        List<String> youngestMales = new ArrayList<>();
+        List<String> oldestFemales = new ArrayList<>();
+       
+        //for loop to determine the students info
+        for (Student student : students) {
+            if (student.sex == 'M' && student.age < minMaleAge) {
+                minMaleAge = student.age;
+                youngestMales.clear();
+                youngestMales.add(student.name + " (age " + student.age + ")");
+            } else if (student.sex == 'F' && student.age > maxFemaleAge) {
+                maxFemaleAge = student.age;
+                oldestFemales.clear();
+                oldestFemales.add(student.name + " (age " + student.age + ")");
+            } else if (student.sex == 'M' && student.age == minMaleAge) {
+                youngestMales.add(student.name + " (age " + student.age + ")");
+            } else if (student.sex == 'F' && student.age == maxFemaleAge) {
+                oldestFemales.add(student.name + " (age " + student.age + ")");
+            }
+        }
+        
+        // print the oldest female and youngest male students
+        System.out.println("\nThe oldest female students are:");
+        for (String name : oldestFemales) {
+            System.out.println(name + ".");
+        }
+
+        System.out.println("\nThe youngest male students are:");
+        for (String name : youngestMales) {
+            System.out.println(name + ".");
+        }
+    }
+}
+class Student {
+    String name;
+    char sex;
+    int age;
+
+   public  Student(String name, char sex, int age) {
+        this.name = name;
+        this.sex = sex;
+        this.age = age;
+    }
+
+   
+}
