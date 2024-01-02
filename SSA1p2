@@ -1,0 +1,48 @@
+public class A1p2 {
+    public static void main(String[] args) {
+        if (args.length != 1) {
+        System.out.println("Please enter a positive integer.");
+        return;
+        }
+
+        int m = Integer.parseInt(args[0]);
+        if (m % 60 != 0) {
+            System.out.println("Input must be a multiple of 60.");
+            return;
+        }
+
+        char[] randomChars = generateRandomUpperCaseChars(m);
+
+        System.out.println("Generated a string of " + m + " chars.");
+        System.out.println("Original random upper case string:");
+        printCharArray(randomChars);
+
+        convertToBackwardLowerCase(randomChars, m);
+
+        System.out.println("Backward-offset lower case string:");
+        printCharArray(randomChars);
+    }
+
+    public static char[] generateRandomUpperCaseChars(int m) {
+        char[] result = new char[m];
+        for (int i = 0; i < m; i++) {
+            result[i] = (char) ('A' + (int) (Math.random() * 26));
+        }
+        return result;
+    }
+
+    public static void convertToBackwardLowerCase(char[] array, int m) {
+        for (int i = 0; i < m; i++) {
+            if (array[i] >= 'A' && array[i] <= 'Z') {
+                array[i] = (char) ((array[i] - 'A' + 25) % 26 + 'a');
+            }
+        }
+    }
+
+    public static void printCharArray(char[] array) {
+        for (char c : array) {
+            System.out.print(c);
+        }
+        System.out.println();
+    }
+}
