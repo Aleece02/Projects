@@ -1,0 +1,70 @@
+public class A1p {
+public static void main(String[] args) {
+        if (args.length != 2) {
+           System.out.println("Please enter a positive integer greater than 2");
+            return;
+        }
+
+        int m = Integer.parseInt(args[0]);
+        int n = Integer.parseInt(args[1]);
+
+        if (m % 60 != 0 || n < 2 || n > 6) {
+            System.out.println("Invalid input values. m should be a multiple of 60, and n should be between 2 and 6 inclusive.");
+            return;
+        }
+
+        char[] randomChars = generateRandomUpperCaseChars(m);
+        
+        System.out.println("Using " + n + " threads to handle " + m + " chars.");
+        System.out.println("Original random upper case string:");
+        printCharArray(randomChars);
+
+        convertToBackwardLowerCaseWithThreads(randomChars, n);
+
+        System.out.println("Backward-offset lower case string:");
+        printCharArray(randomChars);
+    }
+
+    public static char[] generateRandomUpperCaseChars(int m) {
+        char[] result = new char[m];
+        for (int i = 0; i < m; i++) {
+            result[i] = (char) ('A' + (int) (Math.random() * 26));
+        }
+        return result;
+    }
+
+    public static void convertToBackwardLowerCaseWithThreads(char[] array, int n) {
+        int chunkSize = array.length / n;
+        Thread[] threads = new Thread[n];
+
+        for (int i = 0; i < n; i++) {
+            int startIndex = i * chunkSize;
+            int endIndex = (i == n - 1) ? array.length : (i + 1) * chunkSize;
+
+            threads[i] = new Thread(() -> {
+                for (int j = startIndex; j < endIndex; j++) {
+                    if (array[j] >= 'A' && array[j] <= 'Z') {
+                        array[j] = (char) ((array[j] - 'A' + 25) % 26 + 'a');
+                    }
+                }
+            });
+
+            threads[i].start();
+        }
+
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static void printCharArray(char[] array) {
+        for (char c : array) {
+            System.out.print(c);
+        }
+        System.out.println();
+    }
+}
