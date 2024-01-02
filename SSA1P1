@@ -1,0 +1,38 @@
+public class A1p1 {
+	 public static void main(String[] args) {
+	      if (args.length != 1) {
+	         System.out.println("Please enter a number greater than 1.");
+	          return;
+	      }
+
+	        try {
+	            int a = Integer.parseInt(args[0]);
+	            if (a < 2) {
+	                System.out.println("Please enter a positive integer at least 2.");
+	                return;
+	            }
+
+	            System.out.println("Iterated list for " + a + " is:");
+	            int length = 0;
+
+	            while (a != 1) {
+	                System.out.print(a + ",");
+	                length++;
+
+	                if (a % 2 == 0) {
+	                    a /= 2;
+	                } else {
+	                    a = (3 * a + 1) / 2;
+	                }
+	            }
+
+	            // Add the final '1' and print the length of the list
+	            System.out.println("1");
+	            length++;
+	            System.out.println("Length of the list: " + length);
+	        } catch (NumberFormatException e) {
+	            System.out.println("Invalid input. Please enter a valid positive integer.");
+	        }
+	    }
+	}
+
