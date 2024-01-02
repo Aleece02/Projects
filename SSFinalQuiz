@@ -1,0 +1,90 @@
+public class FinalQuiz {
+
+    private static int countA = 0;
+    private static int countB = 0;
+
+    public static void main(String[] args) {
+        if (args.length != 3) {
+           System.out.println("Usage: java FinalQuiz a b n");
+           return;
+        }
+
+        int a = Integer.parseInt(args[0]);
+        int b = Integer.parseInt(args[1]);
+        int n = Integer.parseInt(args[2]);
+
+        if (a % 2 == 0 || b % 2 == 0 || a >= b || n < 2 || n > 6) {
+            System.out.println("Invalid input. Please make sure a and b are positive odd integers with a < b, and n is between 2 and 6 inclusive.");
+            return;
+        }
+
+        int range = (b - a) / 2 + 1;
+        int numbersPerThread = range / n;
+
+        Thread[] threads = new Thread[n];
+
+        for (int i = 0; i < n; i++) {
+            int start = a + i * numbersPerThread * 2;
+            int end = start + numbersPerThread * 2 - 2;
+
+            if (i == n - 1) {
+                end = b;
+            }
+
+            threads[i] = new Thread(new CollatzCounter(start, end));
+            threads[i].start();
+        }
+
+   
+        try {
+            for (Thread thread : threads) {
+                thread.join();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Using " + n + " threads.");
+        System.out.println("Count for (A) is " + countA + ".");
+        System.out.println("Count for (B) is " + countB + ".");
+    }
+
+    static class CollatzCounter implements Runnable {
+
+        private final int start;
+        private final int end;
+
+        public CollatzCounter(int start, int end) {
+            this.start = start;
+            this.end = end;
+        }
+
+        @Override
+        public void run() {
+            for (int i = start; i <= end; i += 2) {
+                int length = getCollatzListLength(i);
+                if (length >= i / 2.0) {
+                    synchronized (FinalQuiz.class) {
+                        countA++;
+                    }
+                } else {
+                    synchronized (FinalQuiz.class) {
+                        countB++;
+                    }
+                }
+            }
+        }
+
+        private int getCollatzListLength(int x) {
+            int length = 1;
+            while (x != 1) {
+                if (x % 2 == 1) {
+                    x = (3 * x + 1)/2;
+                } else {
+                    x = x / 2;
+                }
+                length++;
+            }
+            return length;
+        }
+    }
+}
